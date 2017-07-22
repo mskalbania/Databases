@@ -51,7 +51,7 @@
         <RadioButton layoutX="200.0" layoutY="79.0" mnemonicParsing="false" text="Descending" toggleGroup="$sortType" onAction="#setSortingTypeDescending"/>
 
         <!--CHECKBOXES-->
-        <CheckBox layoutX="14.0" layoutY="160.0" mnemonicParsing="false" text="Only with extended info" />
+        <CheckBox layoutX="14.0" layoutY="160.0" mnemonicParsing="false" text="Only users with extended info" onAction="#revertOnlyWithExtended"/>
 
 
     </children>

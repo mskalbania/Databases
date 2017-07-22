@@ -6,10 +6,13 @@ import javafx.scene.control.TextArea;
 
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class UsersTabController {
 
     private String sortingBy = "ID";
     private String sortingType = "ASC";
+    boolean onlyWithExtended = false;
+
     private UserSupplier userSupplier = new JDBCUserSupplier(); //CURRENTLY HARDCODED
 
     @FXML
@@ -46,12 +49,25 @@ public class UsersTabController {
     }
 
     @FXML
+    public void revertOnlyWithExtended() {
+        if (onlyWithExtended) {
+            onlyWithExtended = false;
+        } else {
+            onlyWithExtended = true;
+        }
+    }
+
+
+    @FXML
     public void getAllUsers() {
-        List<User> userList = userSupplier.getAllBasicInfo(sortingBy, sortingType);
+        List<User> userList = null;
+        if (onlyWithExtended) {
+            userList = userSupplier.getAllExtendedInfo(sortingBy, sortingType);
+        } else {
+            userList = userSupplier.getAllBasicInfo(sortingBy, sortingType);
+        }
         outputConsole.appendText("#####SHOWING USERS SORTED BY " + sortingBy + "#####\n\n");
         userList.forEach(user -> outputConsole.appendText(user.toString() + "\n\n"));
         outputConsole.appendText("###############END###############\n\n");
     }
-
-
 }

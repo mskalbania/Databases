@@ -26,7 +26,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email;
+        if (userExtendedInfo == null) {
+            return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email;
+        } else {
+            return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email +
+                    "\n(EXTRA INFO)\n" + "IS ADMIN: " + userExtendedInfo.getIsAdmin() + "\nADDRESS: " +
+                    userExtendedInfo.getAddress() + "\nPHONE NUMBER: " + userExtendedInfo.getPhoneNumber() +
+                    "\nGENDER: " + userExtendedInfo.getGender();
+        }
     }
 
 }

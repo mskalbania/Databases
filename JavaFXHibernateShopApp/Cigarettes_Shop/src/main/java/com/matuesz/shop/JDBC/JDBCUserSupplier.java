@@ -1,6 +1,7 @@
 package com.matuesz.shop.JDBC;
 
 import com.matuesz.shop.User;
+import com.matuesz.shop.UserExtendedInfo;
 import com.matuesz.shop.UserSupplier;
 
 import java.sql.ResultSet;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public class JDBCUserSupplier implements UserSupplier {
 
-    private final String selectQuery = "SELECT * FROM users";
+    private final String selectFromUsers = "SELECT * FROM users";
+    private final String selectFromUsersExtended = "SELECT * FROM usersExtended";
 
     private DatabaseServer server;
     private Statement actualStatement;
@@ -25,7 +27,8 @@ public class JDBCUserSupplier implements UserSupplier {
         }
     }
 
-    private ResultSet getUserResultSet(String sortBy, String sortType, boolean withExtended) {
+    //QUERIES FOR ALL USERS
+    private ResultSet getUsersResultSet(String sortBy, String sortType, boolean withExtended) {
         ResultSet usersSet = null;
         try {
             server.connect();
@@ -33,23 +36,30 @@ public class JDBCUserSupplier implements UserSupplier {
             switch (sortBy) {
                 case "ID":
                     if (withExtended) {
-
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsersExtended + " ORDER BY user_id " + sortType);
                     } else {
-                        usersSet = actualStatement.executeQuery(selectQuery + " ORDER BY user_id " + sortType);
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsers + " ORDER BY user_id " + sortType);
                     }
                     break;
                 case "NICK":
                     if (withExtended) {
-
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsersExtended + " ORDER BY nick " + sortType);
                     } else {
-                        usersSet = actualStatement.executeQuery(selectQuery + " ORDER BY nick " + sortType);
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsers + " ORDER BY nick " + sortType);
                     }
                     break;
                 case "TIME":
-                    if(withExtended){
+                    if (withExtended) {
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsersExtended + " ORDER BY time_joined " + sortType);
 
-                    }else {
-                        usersSet = actualStatement.executeQuery(selectQuery + " ORDER BY time_joined " + sortType);
+                    } else {
+                        usersSet = actualStatement.executeQuery
+                                (selectFromUsers + " ORDER BY time_joined " + sortType);
                     }
                     break;
             }
@@ -59,37 +69,66 @@ public class JDBCUserSupplier implements UserSupplier {
         return usersSet;
     }
 
+    private void parseUser(ResultSet userResult, List<User> usersList) {
+        try {
+            while (userResult.next()) {
+                User currentUser = User.build()
+                        .withId(userResult.getString("user_id"))
+                        .withNick(userResult.getString("nick"))
+                        .withTimeJoined(userResult.getString("time_joined"))
+                        .withEmail(userResult.getString("email"))
+                        .get();
+                usersList.add(currentUser);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseUserExtendedInfo(ResultSet userResult, List<User> userList) {
+        try {
+            userResult.beforeFirst();
+            while (userResult.next()) {
+                int isAdmin = userResult.getInt("isAdmin");
+                String address = userResult.getString("address");
+                String phoneNumber = userResult.getString("phone_number");
+                String gender = userResult.getString("gender");
+                userList.forEach(user -> user.setExtendedInfo
+                        (new UserExtendedInfo(isAdmin, address, phoneNumber, gender)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public List<User> getAllBasicInfo(String sortBy, String sortType) {
+        ResultSet usersResultSet = getUsersResultSet(sortBy, sortType, false);
         List<User> usersList = new ArrayList<>();
-        ResultSet usersSet = getUserResultSet(sortBy, sortType, false);
-        if (usersSet != null) {
-            try {
-                while (usersSet.next()) {
-                    User currentUser = User.build()
-                            .withId(usersSet.getString("user_id"))
-                            .withNick(usersSet.getString("nick"))
-                            .withTimeJoined(usersSet.getString("time_joined"))
-                            .withEmail(usersSet.getString("email"))
-                            .get();
-                    usersList.add(currentUser);
-                }
-                actualStatement.close();
-                server.disconnect();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        parseUser(usersResultSet, usersList);
+        try {
+            actualStatement.close();
+            server.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return usersList;
     }
 
-
     @Override
     public List<User> getAllExtendedInfo(String sortBy, String sortType) {
         List<User> usersList = new ArrayList<>();
-        ResultSet usersSet = getUserResultSet(sortBy, sortType, true);
+        ResultSet usersSet = getUsersResultSet(sortBy, sortType, true);
 
+        parseUser(usersSet, usersList);
+        parseUserExtendedInfo(usersSet, usersList);
+
+        try {
+            actualStatement.close();
+            server.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return usersList;
     }
 }

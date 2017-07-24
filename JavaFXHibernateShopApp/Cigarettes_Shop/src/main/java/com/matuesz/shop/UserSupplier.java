@@ -8,7 +8,8 @@ public interface UserSupplier {
 
     List<User> getAllExtendedInfo(String sortBy, String sortType);
 
+    void deleteUser(String id);
 
-
+    void addUser(User user);
 
 }

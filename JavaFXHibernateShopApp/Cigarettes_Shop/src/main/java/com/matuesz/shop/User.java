@@ -16,6 +16,26 @@ public class User {
         this.email = email;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public String getTime_joined() {
+        return time_joined;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserExtendedInfo getUserExtendedInfo() {
+        return userExtendedInfo;
+    }
+
     public void setExtendedInfo(UserExtendedInfo extendedInfo) {
         this.userExtendedInfo = extendedInfo;
     }
@@ -30,9 +50,9 @@ public class User {
             return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email;
         } else {
             return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email +
-                    "\n(EXTRA INFO)\n" + "IS ADMIN: " + userExtendedInfo.getIsAdmin() + "\nADDRESS: " +
-                    userExtendedInfo.getAddress() + "\nPHONE NUMBER: " + userExtendedInfo.getPhoneNumber() +
-                    "\nGENDER: " + userExtendedInfo.getGender();
+                    "\n    <EXTRA INFO>    \n" + "IS ADMIN: " + userExtendedInfo.getIsAdmin()
+                    + "\nADDRESS: " + userExtendedInfo.getAddress() + "\nPHONE NUMBER: "
+                    + userExtendedInfo.getPhoneNumber() + "\nGENDER: " + userExtendedInfo.getGender();
         }
     }
 

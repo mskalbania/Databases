@@ -14,6 +14,9 @@ public class JDBCUserSupplier implements UserSupplier {
 
     private final String selectFromUsers = "SELECT * FROM users";
     private final String selectFromUsersExtended = "SELECT * FROM usersExtended";
+    private final String delete = "DELETE FROM users WHERE";
+    private final String add = "INSERT INTO users (nick,email) values";
+
 
     private DatabaseServer server;
     private Statement actualStatement;
@@ -131,4 +134,33 @@ public class JDBCUserSupplier implements UserSupplier {
         }
         return usersList;
     }
+
+    @Override
+    public void deleteUser(String id) {
+        try {
+            server.connect();
+            actualStatement = server.getStatement();
+            actualStatement.executeUpdate(delete + " user_id = " + id);
+            actualStatement.close();
+            server.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void addUser(User user) {
+        try {
+            String nick = user.getNick();
+            String email = user.getEmail();
+            server.connect();
+            actualStatement = server.getStatement();
+            actualStatement.executeUpdate(add + " ('" + nick + "','" + email + "')");
+            actualStatement.close();
+            server.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

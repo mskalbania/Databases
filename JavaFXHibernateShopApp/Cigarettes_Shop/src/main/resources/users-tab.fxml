@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
-<AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.UsersTabController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.UsersTabController">
     <children>
 
-        <!--TEXT AREAS-->
-        <TextArea fx:id="outputConsole" editable="false" layoutX="400.0" layoutY="29.0" prefHeight="570.0" prefWidth="380" wrapText="true" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="29.0">
-            <font>
-                <Font name="Cantarell Regular" size="15.0" />
-            </font>
-        </TextArea>
+        <ListView fx:id="usersList" layoutX="400.0" layoutY="29.0" prefHeight="630.0" prefWidth="380" onMouseClicked="#onSelectedItem"/>
 
-        <Label layoutX="400.0" layoutY="6.0" prefHeight="16.0" prefWidth="128.0" text="Output console:" AnchorPane.bottomAnchor="645.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="6.0" />
+        <Label layoutX="400.0" layoutY="6.0" prefHeight="16.0" prefWidth="128.0" text="List:" AnchorPane.bottomAnchor="645.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="6.0" />
 
         <!--BUTTONS-->
-        <Button fx:id="clearButton" layoutX="400.0" layoutY="610.0" mnemonicParsing="false" prefHeight="47" prefWidth="100" onAction="#clearConsole" text="Clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="610.0" />
-        <Button fx:id="getAllButton" layoutX="14.0" layoutY="189.0" mnemonicParsing="false"  prefHeight="47" prefWidth="355.0" onAction="#getAllUsers" text="GET ALL USERS" textAlignment="CENTER">
-            <font>
-                <Font size="19.0" />
-            </font>
-        </Button>
+        <Button fx:id="removeButton" onAction="#onRemoveButtonClick" disable="true" layoutX="243.0" layoutY="392.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="117.0" text="Remove User"/>
+        <Button fx:id="updateButton" disable="true" layoutX="243.0" layoutY="312.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" text="Update User"/>
+        <Button fx:id="addButton" onAction="#onAddButtonClicked" disable="true" layoutX="243.0" layoutY="233.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" text="Add User"/>
 
         <!--SEPARATORS-->
         <Separator layoutX="371.0" layoutY="7.0" orientation="VERTICAL" prefHeight="650.0" prefWidth="29.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="371.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="7.0" />
         <Separator layoutX="8.0" layoutY="31.0" prefHeight="0.0" prefWidth="373.0" />
+        <Separator layoutX="8.0" layoutY="200.0" prefHeight="0.0" prefWidth="373.0" />
+
 
         <!--LABELS-->
         <Label layoutX="14.0" layoutY="36.0" text="Sort by:" />
         <Label layoutX="200" layoutY="36.0" text="Sorting type:" />
-        <Label layoutX="158.0" layoutY="6.0" text="Getting all" />
+        <Label layoutX="130.0" layoutY="6.0" text="Sorting settings" />
+        <Label layoutX="135.0" layoutY="175.0" text="Users settings" />
 
         <!--RADIO BUTTONS-->
         <RadioButton layoutX="14.0" layoutY="55.0" mnemonicParsing="false" selected="true" text="ID" onAction="#setSortingById">
@@ -51,8 +45,62 @@
         <RadioButton layoutX="200.0" layoutY="79.0" mnemonicParsing="false" text="Descending" toggleGroup="$sortType" onAction="#setSortingTypeDescending"/>
 
         <!--CHECKBOXES-->
-        <CheckBox layoutX="14.0" layoutY="160.0" mnemonicParsing="false" text="Only users with extended info" onAction="#revertOnlyWithExtended"/>
+        <CheckBox layoutX="14.0" layoutY="135.0" mnemonicParsing="false" text="Only users with extended info" onAction="#revertOnlyWithExtended"/>
 
 
+        <VBox layoutX="34.0" layoutY="233.0" prefHeight="201.0" prefWidth="179.0">
+            <children>
+                <Label prefHeight="28.0" prefWidth="83.0" text="id:">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="3.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="idField" editable="false" prefHeight="26.0" prefWidth="154.0">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </TextField>
+                <Label prefHeight="28.0" prefWidth="83.0" text="nick:">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="3.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="nickField" onKeyReleased="#onFieldEdit">
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </TextField>
+                <Label prefHeight="28.0" prefWidth="83.0" text="email:">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="3.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="emailField" onKeyReleased="#onFieldEdit"/>
+                <Label prefHeight="28.0" prefWidth="83.0" text="joined:">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="3.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="joinedField" editable="false"/>
+            </children>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </VBox>
     </children>
 </AnchorPane>

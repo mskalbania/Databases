@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?import javafx.scene.text.Font?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.ItemsTabController">
     <children>
         <ListView fx:id="itemListView" layoutX="14.0" layoutY="34.0" prefHeight="294.0" prefWidth="773.0"/>
@@ -16,7 +13,8 @@
                 <Font size="16.0"/>
             </font>
         </Label>
-        <Button onAction="#onUpdateButtonClick" layoutX="694.0" layoutY="334.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="93.0" text="Update"/>
+        <Button onAction="#onUpdateButtonClick" layoutX="694.0" layoutY="334.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="93.0"
+                text="Update"/>
         <ComboBox fx:id="sortingWay" onAction="#onSortingSettingChange" layoutX="77.0" layoutY="341.0" prefWidth="150.0">
             <items>
                 <FXCollections fx:factory="observableArrayList">

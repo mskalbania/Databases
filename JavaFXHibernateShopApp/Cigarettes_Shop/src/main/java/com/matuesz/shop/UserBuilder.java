@@ -2,12 +2,12 @@ package com.matuesz.shop;
 
 public class UserBuilder {
 
-    private String id;
+    private int id;
     private String nick;
     private String time_joined;
     private String email;
 
-    public UserBuilder withId(String id) {
+    public UserBuilder withId(int id) {
         this.id = id;
         return this;
     }

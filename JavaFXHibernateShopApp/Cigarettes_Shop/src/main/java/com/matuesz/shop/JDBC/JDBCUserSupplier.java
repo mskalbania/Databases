@@ -1,7 +1,7 @@
 package com.matuesz.shop.JDBC;
 
 import com.matuesz.shop.User;
-import com.matuesz.shop.UserExtendedInfo;
+import com.matuesz.shop.UserExtraInfo;
 import com.matuesz.shop.UserSupplier;
 
 import java.sql.ResultSet;
@@ -76,7 +76,7 @@ public class JDBCUserSupplier implements UserSupplier {
         try {
             while (userResult.next()) {
                 User currentUser = User.build()
-                        .withId(userResult.getString("user_id"))
+                        .withId(userResult.getInt("user_id"))
                         .withNick(userResult.getString("nick"))
                         .withTimeJoined(userResult.getString("time_joined"))
                         .withEmail(userResult.getString("email"))
@@ -96,8 +96,8 @@ public class JDBCUserSupplier implements UserSupplier {
                 String address = userResult.getString("address");
                 String phoneNumber = userResult.getString("phone_number");
                 String gender = userResult.getString("gender");
-                userList.forEach(user -> user.setExtendedInfo
-                        (new UserExtendedInfo(isAdmin, address, phoneNumber, gender)));
+                userList.forEach(user -> user.setUserExtraInfo
+                        (new UserExtraInfo(isAdmin, address, phoneNumber, gender)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class JDBCUserSupplier implements UserSupplier {
     }
 
     @Override
-    public void deleteUser(String id) {
+    public void deleteUser(int id) {
         try {
             server.connect();
             actualStatement = server.getStatement();
@@ -167,7 +167,7 @@ public class JDBCUserSupplier implements UserSupplier {
     public void updateUser(User user) {
         String nick = user.getNick();
         String email = user.getEmail();
-        String id = user.getId();
+        int id = user.getId();
         try {
             server.connect();
             actualStatement = server.getStatement();

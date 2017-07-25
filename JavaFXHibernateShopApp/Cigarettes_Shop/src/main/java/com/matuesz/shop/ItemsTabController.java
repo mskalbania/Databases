@@ -3,15 +3,12 @@ package com.matuesz.shop;
 import com.matuesz.shop.JDBC.JDBCItemsSupplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class ItemsTabController {
 

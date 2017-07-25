@@ -1,11 +1,16 @@
 package com.matuesz.shop;
 
-import com.matuesz.shop.JDBC.JDBCUserSupplier;
+import com.matuesz.shop.Hibernate.HibernateUserSupplier;
 
-import java.sql.SQLException;
+import java.util.List;
 
 public class Demo {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
+        HibernateUserSupplier supplier = new HibernateUserSupplier();
+
+        List<User> users = supplier.getAllBasicInfo("id","DESC");
+
+        users.forEach(System.out::println);
     }
 }

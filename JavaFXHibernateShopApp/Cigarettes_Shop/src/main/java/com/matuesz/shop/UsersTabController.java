@@ -1,6 +1,6 @@
 package com.matuesz.shop;
 
-import com.matuesz.shop.JDBC.JDBCUserSupplier;
+import com.matuesz.shop.Hibernate.HibernateUserSupplier;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -39,7 +39,7 @@ public class UsersTabController {
     private String currentFindMethod = "id";
     private List<User> usersList;
 
-    private UserSupplier userSupplier = new JDBCUserSupplier(); //CURRENTLY HARDCODED
+    private UserSupplier userSupplier = new HibernateUserSupplier(); //CURRENTLY HARDCODED
 
     @FXML
     public void initialize() {
@@ -55,13 +55,13 @@ public class UsersTabController {
                     .collect(Collectors.toList())
             );
             usersListView.getItems().setAll(output);
-        }else {
+        } else {
             usersListView.getItems().setAll(usersList);
         }
     }
 
     @FXML
-    public void onFindTypeChange(){
+    public void onFindTypeChange() {
         currentFindMethod = ((String) findBox.getSelectionModel().getSelectedItem());
     }
 
@@ -82,7 +82,7 @@ public class UsersTabController {
     public void onSelectedItem() {
         User selectedUser = (User) usersListView.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            idField.setText(selectedUser.getId());
+            idField.setText(Integer.toString(selectedUser.getId()));
             nickField.setText(selectedUser.getNick());
             emailField.setText(selectedUser.getEmail());
             joinedField.setText(selectedUser.getTime_joined());
@@ -93,7 +93,7 @@ public class UsersTabController {
 
     @FXML
     public void onRemoveButtonClick() {
-        String selectedUserId = ((User) usersListView.getSelectionModel().getSelectedItem()).getId();
+        int selectedUserId = ((User) usersListView.getSelectionModel().getSelectedItem()).getId();
         userSupplier.deleteUser(selectedUserId);
         clearFields();
         removeButton.setDisable(true);
@@ -109,7 +109,6 @@ public class UsersTabController {
                 .get();
 
         userSupplier.addUser(temp);
-        clearFields();
         updateList();
         removeButton.setDisable(true);
         updateButton.setDisable(true);
@@ -117,11 +116,11 @@ public class UsersTabController {
     }
 
     @FXML
-    public void onUpdateButtonClicked(){
+    public void onUpdateButtonClicked() {
         User temp = User.build()
                 .withEmail(emailField.getText())
                 .withNick(nickField.getText())
-                .withId(idField.getText())
+                .withId(Integer.parseInt(idField.getText()))
                 .get();
         userSupplier.updateUser(temp);
         clearFields();
@@ -190,10 +189,10 @@ public class UsersTabController {
         joinedField.clear();
     }
 
-    private Predicate<User> findPredicatePick(){
-        switch (currentFindMethod){
+    private Predicate<User> findPredicatePick() {
+        switch (currentFindMethod) {
             case "id":
-                return user -> user.getId().contains(findField.getText());
+                return user -> Integer.toString(user.getId()).contains(findField.getText());
             case "email":
                 return user -> user.getEmail().contains(findField.getText());
             case "nick":

@@ -12,4 +12,5 @@ public interface UserSupplier {
 
     void addUser(User user);
 
+    void updateUser(User user);
 }

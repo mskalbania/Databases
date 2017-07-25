@@ -12,11 +12,11 @@ import java.util.List;
 
 public class JDBCUserSupplier implements UserSupplier {
 
-    private final String selectFromUsers = "SELECT * FROM users";
-    private final String selectFromUsersExtended = "SELECT * FROM usersExtended";
-    private final String delete = "DELETE FROM users WHERE";
-    private final String add = "INSERT INTO users (nick,email) values";
-
+    private final String SELECT_BASIC = "SELECT * FROM users";
+    private final String SELECT_EXTENDED = "SELECT * FROM usersExtended";
+    private final String DELETE = "DELETE FROM users WHERE";
+    private final String ADD = "INSERT INTO users (nick,email) values";
+    private final String UPDATE = "UPDATE users SET";
 
     private DatabaseServer server;
     private Statement actualStatement;
@@ -40,29 +40,29 @@ public class JDBCUserSupplier implements UserSupplier {
                 case "ID":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsersExtended + " ORDER BY user_id " + sortType);
+                                (SELECT_EXTENDED + " ORDER BY user_id " + sortType);
                     } else {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsers + " ORDER BY user_id " + sortType);
+                                (SELECT_BASIC + " ORDER BY user_id " + sortType);
                     }
                     break;
                 case "NICK":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsersExtended + " ORDER BY nick " + sortType);
+                                (SELECT_EXTENDED + " ORDER BY nick " + sortType);
                     } else {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsers + " ORDER BY nick " + sortType);
+                                (SELECT_BASIC + " ORDER BY nick " + sortType);
                     }
                     break;
                 case "TIME":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsersExtended + " ORDER BY time_joined " + sortType);
+                                (SELECT_EXTENDED + " ORDER BY time_joined " + sortType);
 
                     } else {
                         usersSet = actualStatement.executeQuery
-                                (selectFromUsers + " ORDER BY time_joined " + sortType);
+                                (SELECT_BASIC + " ORDER BY time_joined " + sortType);
                     }
                     break;
             }
@@ -140,7 +140,7 @@ public class JDBCUserSupplier implements UserSupplier {
         try {
             server.connect();
             actualStatement = server.getStatement();
-            actualStatement.executeUpdate(delete + " user_id = " + id);
+            actualStatement.executeUpdate(DELETE + " user_id = " + id);
             actualStatement.close();
             server.disconnect();
         } catch (SQLException e) {
@@ -155,7 +155,7 @@ public class JDBCUserSupplier implements UserSupplier {
             String email = user.getEmail();
             server.connect();
             actualStatement = server.getStatement();
-            actualStatement.executeUpdate(add + " ('" + nick + "','" + email + "')");
+            actualStatement.executeUpdate(ADD + " ('" + nick + "','" + email + "')");
             actualStatement.close();
             server.disconnect();
         } catch (SQLException e) {
@@ -163,4 +163,20 @@ public class JDBCUserSupplier implements UserSupplier {
         }
     }
 
+    @Override
+    public void updateUser(User user) {
+        String nick = user.getNick();
+        String email = user.getEmail();
+        String id = user.getId();
+        try {
+            server.connect();
+            actualStatement = server.getStatement();
+            actualStatement.executeUpdate(UPDATE + " nick = '" + nick + "',email = '"
+                    + email + "' WHERE user_id = " + id);
+            actualStatement.close();
+            server.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

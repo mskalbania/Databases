@@ -4,16 +4,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.UsersTabController">
     <children>
 
-        <ListView fx:id="usersList" layoutX="400.0" layoutY="29.0" prefHeight="630.0" prefWidth="380" onMouseClicked="#onSelectedItem"/>
-
+        <ListView fx:id="usersListView" layoutX="400.0" layoutY="29.0" prefHeight="590.0" prefWidth="380" onMouseClicked="#onSelectedItem"/>
+        <TextField fx:id="findField" onKeyReleased="#onFindBoxInput" layoutX="563.0" layoutY="627.0" prefHeight="26.0" prefWidth="219.0" />
+        <Label layoutX="400.0" layoutY="631.0" text="Find by">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="findBox" onAction="#onFindTypeChange" layoutX="455.0" layoutY="627.0" prefHeight="22.0" prefWidth="93.0" >
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="id"/>
+                    <String fx:value="nick"/>
+                    <String fx:value="email"/>
+                    <String fx:value="date"/>
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:value="id"/>
+            </value>
+        </ComboBox>
         <Label layoutX="400.0" layoutY="6.0" prefHeight="16.0" prefWidth="128.0" text="List:" AnchorPane.bottomAnchor="645.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="6.0" />
 
         <!--BUTTONS-->
         <Button fx:id="removeButton" onAction="#onRemoveButtonClick" disable="true" layoutX="243.0" layoutY="392.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="117.0" text="Remove User"/>
-        <Button fx:id="updateButton" disable="true" layoutX="243.0" layoutY="312.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" text="Update User"/>
+        <Button fx:id="updateButton" onAction="#onUpdateButtonClicked" disable="true" layoutX="243.0" layoutY="312.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" text="Update User"/>
         <Button fx:id="addButton" onAction="#onAddButtonClicked" disable="true" layoutX="243.0" layoutY="233.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" text="Add User"/>
 
         <!--SEPARATORS-->

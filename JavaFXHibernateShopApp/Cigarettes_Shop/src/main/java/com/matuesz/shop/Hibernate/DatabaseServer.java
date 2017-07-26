@@ -15,7 +15,7 @@ public class DatabaseServer {
                 .configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
     }
 
-    public static synchronized DatabaseServer get() {
+    public static synchronized DatabaseServer getInstance() {
         if (instance == null) {
             instance = new DatabaseServer();
             return instance;

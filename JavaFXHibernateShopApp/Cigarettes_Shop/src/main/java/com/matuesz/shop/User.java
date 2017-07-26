@@ -15,8 +15,8 @@ public class User {
     private String time_joined;
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private UserExtraInfo userExtraInfo;
 
     public User() {
@@ -80,9 +80,11 @@ public class User {
             return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email;
         } else {
             return "ID: " + id + "\nNICK: " + nick + "\nJOINED: " + time_joined + "\nEMAIL: " + email +
-                    "\n\n<EXTRA INFO>" + "\nIS ADMIN: " + userExtraInfo.getIsAdmin() +
-                    "\nADRESS: " + userExtraInfo.getAddress() +
-                    "\nPHONE: " + userExtraInfo.getPhoneNumber();
+                    "\n------------------------------------------\n" +
+                    "<EXTRA INFO>" + "\nIS ADMIN: " + userExtraInfo.getIsAdmin() +
+                    "\nADDRESS: " + userExtraInfo.getAddress() +
+                    "\nPHONE: " + userExtraInfo.getPhoneNumber() +
+                    "\nGENDER: " + userExtraInfo.getGender() + "\n------------------------------------------\n";
         }
     }
 

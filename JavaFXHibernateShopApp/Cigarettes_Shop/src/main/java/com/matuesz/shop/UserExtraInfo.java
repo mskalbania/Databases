@@ -1,13 +1,26 @@
 package com.matuesz.shop;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users_extra_info")
 public class UserExtraInfo {
+
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
     @Id
     @Column(name = "user_id")
@@ -17,16 +30,22 @@ public class UserExtraInfo {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    private String gender;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
 
     public UserExtraInfo() {
     }
 
-    public UserExtraInfo(int isAdmin, String address, String phoneNumber, String gender) {
+    public UserExtraInfo(int isAdmin, String address, String phoneNumber, Gender gender) {
         this.isAdmin = isAdmin;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIsAdmin() {
@@ -42,6 +61,6 @@ public class UserExtraInfo {
     }
 
     public String getGender() {
-        return gender;
+        return gender.getName();
     }
 }

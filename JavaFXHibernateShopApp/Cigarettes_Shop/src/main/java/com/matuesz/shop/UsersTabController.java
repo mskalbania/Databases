@@ -25,11 +25,23 @@ public class UsersTabController {
     @FXML
     private TextField joinedField;
     @FXML
+    private TextField adminField;
+    @FXML
+    private TextField addressField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private TextField genderField;
+    @FXML
     private Button updateButton;
     @FXML
     private Button removeButton;
     @FXML
     private Button addButton;
+    @FXML
+    private Button extraInfoAdd;
+    @FXML
+    private Button extraInfoDelete;
     @FXML
     private ComboBox findBox;
 
@@ -86,9 +98,40 @@ public class UsersTabController {
             nickField.setText(selectedUser.getNick());
             emailField.setText(selectedUser.getEmail());
             joinedField.setText(selectedUser.getTime_joined());
+
+            UserExtraInfo info = selectedUser.getUserExtraInfo();
+            if (info != null) {
+                if (info.getIsAdmin() == 0) {
+                    adminField.setText("No");
+                } else {
+                    adminField.setText("Yes");
+                }
+                addressField.setText(info.getAddress());
+                phoneField.setText(info.getPhoneNumber());
+                genderField.setText(info.getGender());
+                extraInfoDelete.setDisable(false);
+            }
+            extraInfoAdd.setDisable(false);
             updateButton.setDisable(false);
             removeButton.setDisable(false);
         }
+    }
+
+    @FXML
+    public void onExtraInfoAddButtonClick() {
+        User selectedUser = ((User) usersListView.getSelectionModel().getSelectedItem());
+        UserExtraInfo info = new UserExtraInfo();
+
+        if (genderField.getText().trim().equals("Yes")) {
+            info.setIsAdmin(1);
+        } else {
+            info.setIsAdmin(0);
+        }
+        info.setId(selectedUser.getId());
+        info.setAddress(addressField.getText());
+        info.setPhoneNumber(addButton.getText());
+        ((HibernateUserSupplier) userSupplier).updateExtraInfo(info, genderField.getText());
+        updateList();
     }
 
     @FXML
@@ -143,19 +186,19 @@ public class UsersTabController {
 
     @FXML
     public void setSortingById() {
-        this.sortingBy = "ID";
+        this.sortingBy = "id";
         updateList();
     }
 
     @FXML
     public void setSortingByNick() {
-        this.sortingBy = "NICK";
+        this.sortingBy = "nick";
         updateList();
     }
 
     @FXML
     public void setSortingByTime() {
-        this.sortingBy = "TIME";
+        this.sortingBy = "time_joined";
         updateList();
     }
 

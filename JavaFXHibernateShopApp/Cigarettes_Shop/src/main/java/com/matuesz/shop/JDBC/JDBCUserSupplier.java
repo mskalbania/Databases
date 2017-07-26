@@ -1,5 +1,6 @@
 package com.matuesz.shop.JDBC;
 
+import com.matuesz.shop.Gender;
 import com.matuesz.shop.User;
 import com.matuesz.shop.UserExtraInfo;
 import com.matuesz.shop.UserSupplier;
@@ -37,7 +38,7 @@ public class JDBCUserSupplier implements UserSupplier {
             server.connect();
             actualStatement = server.getStatement();
             switch (sortBy) {
-                case "ID":
+                case "id":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
                                 (SELECT_EXTENDED + " ORDER BY user_id " + sortType);
@@ -46,7 +47,7 @@ public class JDBCUserSupplier implements UserSupplier {
                                 (SELECT_BASIC + " ORDER BY user_id " + sortType);
                     }
                     break;
-                case "NICK":
+                case "nick":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
                                 (SELECT_EXTENDED + " ORDER BY nick " + sortType);
@@ -55,7 +56,7 @@ public class JDBCUserSupplier implements UserSupplier {
                                 (SELECT_BASIC + " ORDER BY nick " + sortType);
                     }
                     break;
-                case "TIME":
+                case "time_joined":
                     if (withExtended) {
                         usersSet = actualStatement.executeQuery
                                 (SELECT_EXTENDED + " ORDER BY time_joined " + sortType);
@@ -97,7 +98,7 @@ public class JDBCUserSupplier implements UserSupplier {
                 String phoneNumber = userResult.getString("phone_number");
                 String gender = userResult.getString("gender");
                 userList.forEach(user -> user.setUserExtraInfo
-                        (new UserExtraInfo(isAdmin, address, phoneNumber, gender)));
+                        (new UserExtraInfo(isAdmin, address, phoneNumber, new Gender(gender))));
             }
         } catch (SQLException e) {
             e.printStackTrace();

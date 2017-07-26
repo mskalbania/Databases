@@ -23,7 +23,7 @@ public class App extends Application {
 
     @Override
     public void stop() throws Exception {
-        DatabaseServer.get().closeFactory();
+        DatabaseServer.getInstance().closeFactory();
     }
 
     public static void main(String[] args) {

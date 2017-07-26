@@ -1,16 +1,39 @@
 package com.matuesz.shop;
 
-import com.matuesz.shop.Hibernate.HibernateUserSupplier;
-
-import java.util.List;
+import com.matuesz.shop.Hibernate.DatabaseServer;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class Demo {
     public static void main(String[] args) {
 
-        HibernateUserSupplier supplier = new HibernateUserSupplier();
+        User user = new User();
+        user.setNick("CZESC");
+        user.setEmail("EEEE");
 
-        List<User> users = supplier.getAllBasicInfo("id","DESC");
+        UserExtraInfo extraInfo = new UserExtraInfo();
+        extraInfo.setId(255);
+        extraInfo.setPhoneNumber("1232131");
+        extraInfo.setAddress("asdasd");
+        extraInfo.setIsAdmin(1);
 
-        users.forEach(System.out::println);
+
+
+
+
+
+
+        Session session = DatabaseServer.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+
+
+        Gender g = ((Gender) session.createQuery("FROM Gender g where g.gender = '" + "XX" + "'").uniqueResult());
+
+        System.out.println(g);
+
+        transaction.commit();
+        session.close();
+        DatabaseServer.getInstance().closeFactory();
     }
 }

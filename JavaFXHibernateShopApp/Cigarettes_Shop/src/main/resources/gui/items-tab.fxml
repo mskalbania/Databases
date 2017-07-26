@@ -7,13 +7,13 @@
 <?import java.lang.*?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.item.ItemsTabController">
     <children>
-        <ListView fx:id="itemListView" layoutX="14.0" layoutY="34.0" prefHeight="294.0" prefWidth="773.0"/>
+        <ListView fx:id="itemListView" onMouseClicked="#onItemSelected" layoutX="14.0" layoutY="34.0" prefHeight="294.0" prefWidth="773.0"/>
         <Label layoutX="14.0" layoutY="14.0" text="Item list:">
             <font>
                 <Font size="16.0"/>
             </font>
         </Label>
-        <Button onAction="#onUpdateButtonClick" layoutX="694.0" layoutY="334.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="93.0"
+        <Button onAction="#update" layoutX="694.0" layoutY="334.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="93.0"
                 text="Update"/>
         <ComboBox fx:id="sortingWay" onAction="#onSortingSettingChange" layoutX="77.0" layoutY="341.0" prefWidth="150.0">
             <items>
@@ -41,5 +41,23 @@
                 <String fx:value="Ascending"/>
             </value>
         </ComboBox>
+
+
+        <TextField fx:id="nameField" onKeyReleased="#onFieldsInputChange" layoutX="14.0" layoutY="406.0"/>
+        <TextField fx:id="priceField" onKeyReleased="#onFieldsInputChange" layoutX="227.0" layoutY="406.0"/>
+        <TextField fx:id="quantityField" onKeyReleased="#onFieldsInputChange" layoutX="432.0" layoutY="406.0"/>
+        <ComboBox fx:id="itemType" onAction="#onFieldsInputChange" layoutX="636.0" layoutY="406.0" prefWidth="150.0"/>
+        <Label layoutX="14.0" layoutY="390.0" text="Name:"/>
+        <Label layoutX="227.0" layoutY="390.0" text="Price:"/>
+        <Label layoutX="432.0" layoutY="390.0" text="Quantity:"/>
+        <Label layoutX="636.0" layoutY="390.0" text="Type:"/>
+
+        <Button fx:id="clearFieldsButton" onAction="#onClearFieldsButtonClick" layoutX="669.0" layoutY="466.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="118.0" text="Clear Fields"/>
+        <TextArea fx:id="statsArea" editable="false" layoutX="14.0" layoutY="465.0" prefHeight="181.0" prefWidth="171.0"/>
+        <Button fx:id="addButton" onAction="#onAddButtonClick" disable="true" layoutX="206.0" layoutY="465.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="134.0" text="Add Item"/>
+        <Button fx:id="updateButton" layoutX="365.0" layoutY="465.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="134.0" text="Update selected"/>
+        <Button fx:id="removeButton" disable="true" onAction="#onRemoveButtonClick" layoutX="518.0" layoutY="465.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="134.0" text="Remove selected"/>
+        <Label layoutX="14.0" layoutY="449.0" text="Statistics:"/>
+
     </children>
 </AnchorPane>

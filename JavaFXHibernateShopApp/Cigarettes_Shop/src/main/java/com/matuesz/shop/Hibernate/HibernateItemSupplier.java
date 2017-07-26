@@ -41,13 +41,34 @@ public class HibernateItemSupplier implements ItemsSupplier {
         addOrUpdateItem(item);
     }
 
+    @Override
+    public Integer addItemType(ItemType itemType) {
+        Session session = DatabaseServer.getInstance().getSession();
+        Transaction tx = session.beginTransaction();
+        Integer obtainedId = ((Integer) session.save(itemType));
+        tx.commit();
+        session.close();
+        return obtainedId;
+    }
+
+    @Override
+    public List<ItemType> getItemTypes(){
+        List<ItemType> items;
+        Session session = DatabaseServer.getInstance().getSession();
+        Transaction tx = session.beginTransaction();
+        items = session.createQuery("from ItemType ").list();
+        tx.commit();
+        session.close();
+        return items;
+    }
+
     private void addOrUpdateItem(Item item) {
         String itemType = item.getItemType().getType();
         int typeId = getItemTypeId(itemType);
 
         //Indicates that specified type is not in db
         if (typeId == -1) {
-            int obtainedId = addNewItemType(item.getItemType());
+            int obtainedId = addItemType(item.getItemType());
             item.getItemType().setId(obtainedId);
         } else {
             item.setItemType(new ItemType(typeId));
@@ -76,14 +97,5 @@ public class HibernateItemSupplier implements ItemsSupplier {
         } else {
             return -1;
         }
-    }
-
-    private Integer addNewItemType(ItemType itemType) {
-        Session session = DatabaseServer.getInstance().getSession();
-        Transaction tx = session.beginTransaction();
-        Integer obtainedId = ((Integer) session.save(itemType));
-        tx.commit();
-        session.close();
-        return obtainedId;
     }
 }

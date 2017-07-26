@@ -50,6 +50,11 @@ public class JDBCItemsSupplier implements ItemsSupplier {
     }
 
     @Override
+    public List<ItemType> getItemTypes() {
+        return null;
+    }
+
+    @Override
     public void removeItem(Item item) {
 
     }
@@ -62,5 +67,10 @@ public class JDBCItemsSupplier implements ItemsSupplier {
     @Override
     public void addItem(Item item) {
 
+    }
+
+    @Override
+    public Integer addItemType(ItemType itemType) {
+        return null;
     }
 }

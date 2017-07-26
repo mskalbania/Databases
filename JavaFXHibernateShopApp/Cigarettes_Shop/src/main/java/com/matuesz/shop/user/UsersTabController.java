@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package com.matuesz.shop.user;
 
 import com.matuesz.shop.Hibernate.HibernateUserSupplier;
 import javafx.fxml.FXML;
@@ -122,15 +122,26 @@ public class UsersTabController {
         User selectedUser = ((User) usersListView.getSelectionModel().getSelectedItem());
         UserExtraInfo info = new UserExtraInfo();
 
-        if (genderField.getText().trim().equals("Yes")) {
+        if (adminField.getText().trim().toUpperCase().equals("YES")) {
             info.setIsAdmin(1);
         } else {
             info.setIsAdmin(0);
         }
         info.setId(selectedUser.getId());
         info.setAddress(addressField.getText());
-        info.setPhoneNumber(addButton.getText());
+        info.setPhoneNumber(phoneField.getText());
         ((HibernateUserSupplier) userSupplier).updateExtraInfo(info, genderField.getText());
+        updateList();
+    }
+
+    @FXML
+    public void onRemoveInfoButtonClick() {
+
+        User temp = ((User) usersListView.getSelectionModel().getSelectedItem());
+
+        if (temp.getUserExtraInfo() != null) {
+            ((HibernateUserSupplier) userSupplier).removeExtraInfo(temp.getUserExtraInfo());
+        }
         updateList();
     }
 

@@ -1,9 +1,9 @@
 package com.matuesz.shop.Hibernate;
 
-import com.matuesz.shop.Gender;
-import com.matuesz.shop.User;
-import com.matuesz.shop.UserExtraInfo;
-import com.matuesz.shop.UserSupplier;
+import com.matuesz.shop.user.Gender;
+import com.matuesz.shop.user.User;
+import com.matuesz.shop.user.UserExtraInfo;
+import com.matuesz.shop.user.UserSupplier;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -14,20 +14,30 @@ public class HibernateUserSupplier implements UserSupplier {
 
     public void updateExtraInfo(UserExtraInfo info, String gender) {
         Session session = DatabaseServer.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
 
+        Transaction transaction = session.beginTransaction();
         Gender temp = ((Gender) session.createQuery("FROM Gender g where g.gender = '"
                 + gender.toUpperCase() + "'").uniqueResult());
         transaction.commit();
+
         if(temp == null){
             temp = new Gender();
             temp.setGender(gender);
         }
-
         info.setGender(temp);
 
         transaction = session.beginTransaction();
         session.saveOrUpdate(info);
+        transaction.commit();
+        session.close();
+    }
+
+    public void removeExtraInfo(UserExtraInfo info){
+        Session session = DatabaseServer.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.delete(info);
+
         transaction.commit();
         session.close();
     }

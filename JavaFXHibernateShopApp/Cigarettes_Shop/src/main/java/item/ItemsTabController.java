@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package item;
 
 import com.matuesz.shop.JDBC.JDBCItemsSupplier;
 import javafx.collections.FXCollections;

@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package item;
 
 public class ItemType {
 

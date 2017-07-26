@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package com.matuesz.shop.user;
 
 import javax.persistence.*;
 import java.io.Serializable;

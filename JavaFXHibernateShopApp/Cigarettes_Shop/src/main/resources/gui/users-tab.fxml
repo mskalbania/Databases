@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.UsersTabController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.user.UsersTabController">
     <children>
 
         <ListView fx:id="usersListView" layoutX="400.0" layoutY="29.0" prefHeight="590.0" prefWidth="380" onMouseClicked="#onSelectedItem"/>
@@ -152,7 +152,7 @@
                 </TextField>
                 <Label text="Gender:"/>
                 <TextField fx:id="genderField"/>
-                <Button fx:id="extraInfoDelete" disable="true" mnemonicParsing="false" prefHeight="42.0" prefWidth="162.0" text="Delete">
+                <Button fx:id="extraInfoDelete" onAction="#onRemoveInfoButtonClick" disable="true" mnemonicParsing="false" prefHeight="42.0" prefWidth="162.0" text="Delete">
                     <VBox.margin>
                         <Insets top="15.0"/>
                     </VBox.margin>

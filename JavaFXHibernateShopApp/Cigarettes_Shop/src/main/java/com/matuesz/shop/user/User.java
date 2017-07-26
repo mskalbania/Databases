@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package com.matuesz.shop.user;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ public class User {
     private String time_joined;
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserExtraInfo userExtraInfo;
 

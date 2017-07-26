@@ -1,4 +1,4 @@
-package com.matuesz.shop;
+package com.matuesz.shop.user;
 
 import javax.persistence.*;
 
@@ -30,7 +30,7 @@ public class UserExtraInfo {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;
 

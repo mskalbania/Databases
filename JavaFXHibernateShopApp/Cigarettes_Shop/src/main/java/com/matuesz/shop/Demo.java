@@ -1,6 +1,9 @@
 package com.matuesz.shop;
 
 import com.matuesz.shop.Hibernate.DatabaseServer;
+import com.matuesz.shop.user.Gender;
+import com.matuesz.shop.user.User;
+import com.matuesz.shop.user.UserExtraInfo;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

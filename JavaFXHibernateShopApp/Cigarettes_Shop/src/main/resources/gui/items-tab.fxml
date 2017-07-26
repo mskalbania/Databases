@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.*?>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.matuesz.shop.ItemsTabController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "item.ItemsTabController">
     <children>
         <ListView fx:id="itemListView" layoutX="14.0" layoutY="34.0" prefHeight="294.0" prefWidth="773.0"/>
         <Label layoutX="14.0" layoutY="14.0" text="Item list:">

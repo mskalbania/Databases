@@ -1,9 +1,8 @@
 package com.matuesz.shop.JDBC;
 
-import com.matuesz.shop.Item;
-import com.matuesz.shop.ItemBuilder;
-import com.matuesz.shop.ItemType;
-import com.matuesz.shop.ItemsSupplier;
+import item.Item;
+import item.ItemType;
+import item.ItemsSupplier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

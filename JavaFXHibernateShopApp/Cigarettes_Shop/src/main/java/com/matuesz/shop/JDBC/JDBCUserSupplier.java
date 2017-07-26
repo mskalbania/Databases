@@ -1,9 +1,9 @@
 package com.matuesz.shop.JDBC;
 
-import com.matuesz.shop.Gender;
-import com.matuesz.shop.User;
-import com.matuesz.shop.UserExtraInfo;
-import com.matuesz.shop.UserSupplier;
+import com.matuesz.shop.user.Gender;
+import com.matuesz.shop.user.User;
+import com.matuesz.shop.user.UserExtraInfo;
+import com.matuesz.shop.user.UserSupplier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,6 +1,6 @@
-package item;
+package com.matuesz.shop.item;
 
-import com.matuesz.shop.JDBC.JDBCItemsSupplier;
+import com.matuesz.shop.Hibernate.HibernateItemSupplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,14 +19,14 @@ public class ItemsTabController {
     @FXML
     private ComboBox sortingType;
 
-    private ItemsSupplier itemsSupplier = new JDBCItemsSupplier(); //currently hardcoded
+    private ItemsSupplier itemsSupplier = new HibernateItemSupplier(); //currently hardcoded
     private ObservableList<Item> itemList;
 
-    private final Comparator<Item> id = Comparator.comparingInt(i -> Integer.parseInt(i.getId()));
+    private final Comparator<Item> id = Comparator.comparingInt(Item::getId);
     private final Comparator<Item> name = Comparator.comparing(Item::getName);
     private final Comparator<Item> price = Comparator.comparing(Item::getPrice);
     private final Comparator<Item> quantity = Comparator.comparing(Item::getQuantityAtStock);
-    private final Comparator<Item> type = Comparator.comparing(i -> i.getType().getTypeName());
+    private final Comparator<Item> type = Comparator.comparing(i -> i.getItemType().getTypeName());
 
 
     @FXML

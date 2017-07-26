@@ -1,13 +1,13 @@
-package item;
+package com.matuesz.shop.item;
 
 public class ItemBuilder {
-    private String id;
+    private int id;
     private String name;
     private double price;
     private int quantityAtStock;
     private ItemType type;
 
-    public ItemBuilder setId(String id) {
+    public ItemBuilder setId(int id) {
         this.id = id;
         return this;
     }

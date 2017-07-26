@@ -12,5 +12,7 @@
         <mapping class="com.matuesz.shop.user.User"/>
         <mapping class="com.matuesz.shop.user.UserExtraInfo"/>
         <mapping class="com.matuesz.shop.user.Gender"/>
+        <mapping class="com.matuesz.shop.item.Item"/>
+        <mapping class="com.matuesz.shop.item.ItemType"/>
     </session-factory>
 </hibernate-configuration>

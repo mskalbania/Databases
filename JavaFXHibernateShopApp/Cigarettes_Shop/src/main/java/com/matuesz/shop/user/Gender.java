@@ -1,11 +1,10 @@
 package com.matuesz.shop.user;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "genders")
-public class Gender implements Serializable{
+public class Gender{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

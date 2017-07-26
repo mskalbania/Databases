@@ -29,10 +29,6 @@ public class DatabaseServer {
         return currentSession;
     }
 
-    public void closeSession() {
-        currentSession.close();
-    }
-
     public void closeFactory(){
         factory.close();
     }

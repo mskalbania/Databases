@@ -1,42 +1,25 @@
 package com.matuesz.shop;
 
 import com.matuesz.shop.Hibernate.DatabaseServer;
-import com.matuesz.shop.user.Gender;
-import com.matuesz.shop.user.User;
-import com.matuesz.shop.user.UserExtraInfo;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import com.matuesz.shop.Hibernate.HibernateItemSupplier;
+import com.matuesz.shop.item.Item;
+import com.matuesz.shop.item.ItemType;
 
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        HibernateItemSupplier hs = new HibernateItemSupplier();
 
-        User user = new User();
-        user.setNick("CZESC");
-        user.setEmail("EEEE");
+        Item item = new Item();
+        item.setId(202);
+        item.setName("Jakies szlugensy");
+        item.setPrice(100.00);
+        item.setQuantityAtStock(1);
+        item.setItemType(new ItemType("CIGAR"));
 
-        UserExtraInfo extraInfo = new UserExtraInfo();
-        extraInfo.setId(255);
-        extraInfo.setPhoneNumber("1232131");
-        extraInfo.setAddress("asdasd");
-        extraInfo.setIsAdmin(1);
+        hs.updateItem(item);
+        Thread.sleep(30000);
+        hs.removeItem(item);
 
-
-
-
-
-
-
-        Session session = DatabaseServer.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-
-
-
-        Gender g = ((Gender) session.createQuery("FROM Gender g where g.gender = '" + "XX" + "'").uniqueResult());
-
-        System.out.println(g);
-
-        transaction.commit();
-        session.close();
         DatabaseServer.getInstance().closeFactory();
     }
 }

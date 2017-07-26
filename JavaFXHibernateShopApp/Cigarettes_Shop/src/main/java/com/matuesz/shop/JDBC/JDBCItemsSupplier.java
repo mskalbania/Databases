@@ -1,8 +1,8 @@
 package com.matuesz.shop.JDBC;
 
-import item.Item;
-import item.ItemType;
-import item.ItemsSupplier;
+import com.matuesz.shop.item.Item;
+import com.matuesz.shop.item.ItemType;
+import com.matuesz.shop.item.ItemsSupplier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +35,7 @@ public class JDBCItemsSupplier implements ItemsSupplier {
             ResultSet resultSet = actualStatement.executeQuery(SELECT_ALL + " selectAllWithType");
             while (resultSet.next()) {
                 Item item = Item.build()
-                        .setId(Integer.toString(resultSet.getInt("id")))
+                        .setId(resultSet.getInt("id"))
                         .setName(resultSet.getString("name"))
                         .setPrice(resultSet.getDouble("price"))
                         .setQuantityAtStock(resultSet.getInt("quantity_at_stock"))
@@ -47,5 +47,20 @@ public class JDBCItemsSupplier implements ItemsSupplier {
             e.printStackTrace();
         }
         return output;
+    }
+
+    @Override
+    public void removeItem(Item item) {
+
+    }
+
+    @Override
+    public void updateItem(Item item) {
+
+    }
+
+    @Override
+    public void addItem(Item item) {
+
     }
 }

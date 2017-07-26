@@ -20,10 +20,15 @@ public class HibernateUserSupplier implements UserSupplier {
                 + gender.toUpperCase() + "'").uniqueResult());
         transaction.commit();
 
-        if(temp == null){
+        if (temp == null) {
             temp = new Gender();
             temp.setGender(gender);
+            transaction = session.beginTransaction();
+            Integer id = ((Integer) session.save(temp));
+            transaction.commit();
+            temp.setId(id);
         }
+
         info.setGender(temp);
 
         transaction = session.beginTransaction();
@@ -32,7 +37,7 @@ public class HibernateUserSupplier implements UserSupplier {
         session.close();
     }
 
-    public void removeExtraInfo(UserExtraInfo info){
+    public void removeExtraInfo(UserExtraInfo info) {
         Session session = DatabaseServer.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
